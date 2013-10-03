@@ -195,7 +195,7 @@ We also collect locations of eQTL in the Stranger 2007
 multipopulation eQTL study.
 <<getstr>>=
 c17ts = c17tg[ which(values(c17tg)$type == "Stranger_eqtl") ]
-eqloc = AnnotationTrack(ranges(c17ts),  chrom="chr17", genome="hg19", name="Str eQTL")
+eqloc = AnnotationTrack(c17ts,  chrom="chr17", genome="hg19", name="Str eQTL")
 displayPars(eqloc)$col = "black"
 displayPars(dsqs)$col = "red"
 integ = list(basic[[1]], eqloc, dsqs, basic[[2]], basic[[3]])
