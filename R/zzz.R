@@ -36,7 +36,7 @@ packageStartupMessage(" data(ebicat37) for hg19 coordinates.")
 #psm("Use makeCurrentGwascat() to obtain up-to-date image.", appendLF=TRUE)
 #}
 
-gwdf2GRanges = function (df, extractDate, seqlSrc ) 
+gwdf2GRanges.legacy = function (df, extractDate, seqlSrc ) 
 {
 #
 # intent is to take a data frame like that distributed by EMBL/EBI (formerly by NHGRI)
@@ -97,6 +97,52 @@ gwdf2GRanges = function (df, extractDate, seqlSrc )
     mcols(gwrngs)$num.RISK.ALLELE.FREQUENCY = as.numeric(nulcToNA(gsub(killpatt, "", as.character(mcols(gwrngs)$RISK.ALLELE.FREQUENCY))))
 #    gwrngs = makeConsecChrs(gwrngs)  # WHY???
 #    gwrngs = addSeqlengths(gwrngs, src=seqlSrc)
+    gwrngs = new("gwaswloc", extractDate = extractDate, gwrngs)
+    gwrngs
+}
+
+
+gwdf2GRanges = function (df, extractDate, seqlSrc ) 
+{
+#
+# UPGRADING RELEASE TO HANDLE NEW EBI FORMAT SO THAT makeCurrentGwascat will work
+#
+# intent is to take a data frame like that distributed by EMBL/EBI (formerly by NHGRI)
+# and convert to a useful GRanges instance, coercing heterogeneous vectors
+# to majority type
+#
+# NOTE: EMBL/EBI changed the column header case to capitals.  Code
+#  will use the new naming convention
+#
+    gwcatloc = df[which(!is.na(as.numeric(df$CHR_POS))), ]
+#
+# put chr prefix to CHR_ID as needed
+#
+    ch = as.character(gwcatloc$CHR_ID)
+    if (any(ch == "23")) ch[ch=="23"] = "X"
+    
+    if (length(grep("chr", ch)) == 0) 
+        ch = paste("chr", ch, sep = "")
+    gwrngs = GRanges(seqnames = ch, IRanges(as.numeric(gwcatloc$CHR_POS), 
+        width = 1))
+    mcols(gwrngs) = gwcatloc
+#
+# make numeric p values and addresses
+#
+    mcols(gwrngs)[["P-VALUE"]] = 
+  as.numeric(as.character(mcols(gwrngs)[["P-VALUE"]])) # was factor
+    mcols(gwrngs)$PVALUE_MLOG = as.numeric(as.character(mcols(gwrngs)$PVALUE_MLOG)) # was factor
+    mcols(gwrngs)[["OR or BETA"]] = suppressWarnings(as.numeric(as.character(mcols(gwrngs)[["OR or BETA"]]))) # was factor
+    mcols(gwrngs)$CHR_POS = as.numeric(mcols(gwrngs)$CHR_POS)
+#
+# clean out stray whitespace
+#
+    badco = mcols(gwrngs)[["STRONGEST SNP-RISK ALLELE"]]
+    co = gsub(" $", "", badco)
+    mcols(gwrngs)[["STRONGEST SNP-RISK ALLELE"]] = co
+    killpatt = "\\+|[[:alpha:]]|\\(|\\)|\\ "
+    nulcToNA = function(x) {isn = which(nchar(x)==0); if (length(isn)>0) x[isn] = NA; x}
+    mcols(gwrngs)[["RISK ALLELE FREQUENCY"]] = as.numeric(nulcToNA(gsub(killpatt, "", as.character(mcols(gwrngs)[["RISK ALLELE FREQUENCY"]]))))
     gwrngs = new("gwaswloc", extractDate = extractDate, gwrngs)
     gwrngs
 }
