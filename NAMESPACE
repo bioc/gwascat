@@ -10,7 +10,7 @@ import(GenomeInfoDb)
 import(GenomicFeatures)
 importFrom(AnnotationDbi, select, mapIds)
 
-importFrom(IRanges, IRanges, ranges, "%in%", as.list)
+importFrom(IRanges, IRanges, ranges, as.list)
 
 #importClassFrom(snpStats, "SnpMatrix")
 #exportClass("SnpMatrix")
