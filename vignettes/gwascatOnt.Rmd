@@ -98,5 +98,5 @@ names(S4Vectors::mcols(ebicat38))
 adinds = grep("autoimmu", ebicat38$MAPPED_TRAIT)
 adgr = ebicat38[adinds]
 adgr
-mcols(adgr)[, c("MAPPED_TRAIT", "MAPPED_TRAIT_URI")]
+S4Vectors::mcols(adgr)[, c("MAPPED_TRAIT", "MAPPED_TRAIT_URI")]
 ```

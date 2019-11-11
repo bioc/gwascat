@@ -18,6 +18,8 @@
 #[31] "OR or beta"                 "95% CI (text)"             
 #[33] "Platform [SNPs passing QC]" "CNV"              
 #
+#' @importClassesFrom GenomicRanges GRanges
+#' @importClassesFrom IRanges IRanges
 #setClass("study", representation(author="character",
 # pmid="character", date="character"
 
@@ -60,20 +62,24 @@ setMethod("[", "gwaswloc", function(x, i, j, ..., drop=FALSE) {
 })
  
 
+#' @exportMethod getRsids
 setGeneric("getRsids", function(x)standardGeneric("getRsids"))
 setMethod("getRsids", "gwaswloc", function(x)
  mcols(x)$SNPS)
 
+#' @exportMethod getTraits
 setGeneric("getTraits", function(x)standardGeneric("getTraits"))
 setMethod("getTraits", "gwaswloc", function(x)
  mcols(x)[["DISEASE/TRAIT"]])
 
 
+#' @exportMethod subsetByChromosome
 setGeneric("subsetByChromosome", function(x, ch)standardGeneric("subsetByChromosome"))
 setMethod("subsetByChromosome", "gwaswloc", function(x, ch) {
  x[ which(as.character(seqnames(x)) %in% ch) ]
 })
 
+#' @exportMethod subsetByTraits
 setGeneric("subsetByTraits", function(x, tr)standardGeneric("subsetByTraits"))
 setMethod("subsetByTraits", "gwaswloc", function(x, tr) {
  x[ which(getTraits(x) %in% tr) ]

@@ -7,8 +7,8 @@
    vec
    }
 .onAttach = function(libname, pkgname) {
-packageStartupMessage("gwascat loaded.  Use data(ebicat38) for hg38 coordinates;")
-packageStartupMessage(" data(ebicat37) for hg19 coordinates.")
+packageStartupMessage("gwascat loaded.  Use makeCurrentGwascat() to extract current image.")
+packageStartupMessage(" from EBI.  The data folder of this package has some legacy extracts.")
 }
 
 #.onAttach = function(libname, pkgname) {

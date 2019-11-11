@@ -1,4 +1,3 @@
-
 makeCurrentGwascat.legacy = function(table.url="http://www.genome.gov/admin/gwascatalog.txt", fixNonASCII=TRUE, useHg38seqinfo = TRUE, altSeqinfo) {
  tab = read.delim(url(table.url), sep="\t", header=TRUE, check.names=FALSE, stringsAsFactors=FALSE)
  if (missing(altSeqinfo) & !useHg38seqinfo) stop("need an altSeqinfo when  useHg38seqinfo is FALSE")
@@ -14,6 +13,38 @@ makeCurrentGwascat.legacy = function(table.url="http://www.genome.gov/admin/gwas
  cur
 }
 
+
+
+#' read NHGRI GWAS catalog table and construct associated GRanges instance
+#' records for which clear genomic position cannot be determined are dropped
+#' from the ranges instance
+#' an effort is made to use reasonable data types for GRanges metadata, so some
+#' qualifying characters such as (EA) in Risk allele frequency field will
+#' simply be omitted during coercion of contents of that field to numeric.
+#' @importFrom GenomeInfoDb genome "genome<-"
+#' 
+#' @param table.url string identifying the .txt file curated at EBI/EMBL
+#' @param fixNonASCII logical, if TRUE, non-ASCII characters as identified by
+#' iconv will be replaced by asterisk
+#' @param genome character string: 'GRCh38' is default and yields current image
+#' as provided by EMBL/EBI; 'GRCh37' yields a realtime liftOver to hg19
+#' coordinates, via AnnotationHub storage of the chain files. Any other value
+#' yields an error.
+#' @param withOnt logical indicating whether 'alternative' (ontology-present,
+#' includes repetition of loci with one:many ontological mapping) or 'full'
+#' (ontology-absent, one record per locus report) version of distributed table
+#' @return a GRanges instance
+#' @author VJ Carey
+#' @keywords models
+#' @examples
+#' 
+#' # if you have good internet access
+#'   if (interactive()) {
+#'      newcatr = makeCurrentGwascat()
+#'      newcatr
+#'      }
+#' 
+#' @export makeCurrentGwascat
 makeCurrentGwascat = function(table.url=
   "http://www.ebi.ac.uk/gwas/api/search/downloads/alternative",
    fixNonASCII=TRUE, genome="GRCh38", withOnt=TRUE) {

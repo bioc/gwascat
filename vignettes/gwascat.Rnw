@@ -121,14 +121,14 @@ requireNamespace("S4Vectors")
 mcols = S4Vectors::mcols
 mlpv = mcols(ebicat37)$PVALUE_MLOG
 mlpv = ifelse(mlpv > 25, 25, mlpv)
-mcols(gwtrunc)$PVALUE_MLOG = mlpv
+S4Vectors::mcols(gwtrunc)$PVALUE_MLOG = mlpv
 library(GenomeInfoDb)
 seqlevelsStyle(gwtrunc) = "UCSC"
 gwlit = gwtrunc[ which(as.character(seqnames(gwtrunc)) %in% c("chr4", "chr5", "chr6")) ]
 library(ggbio)
 mlpv = mcols(gwlit)$PVALUE_MLOG
 mlpv = ifelse(mlpv > 25, 25, mlpv)
-mcols(gwlit)$PVALUE_MLOG = mlpv
+S4Vectors::mcols(gwlit)$PVALUE_MLOG = mlpv
 <<dodie,echo=FALSE,results=hide,eval=FALSE>>=
 pdf(file="litman.pdf", width=8, height=2)
 <<dorunap,eval=FALSE>>=
@@ -178,7 +178,7 @@ c17tg = import(gffpath)
 
 We make a Gviz DataTrack of the dsQTL scores.
 <<lkgvt>>=
-c17td = c17tg[ which(mcols(c17tg)$type == "Degner_dsQTL") ]
+c17td = c17tg[ which(S4Vectors::mcols(c17tg)$type == "Degner_dsQTL") ]
 library(Gviz)
 dsqs = DataTrack( c17td, chrom="chr17", genome="hg19", data="score",
   name="dsQTL")
@@ -195,7 +195,7 @@ basic = gwcex2gviz(basegr = ebicat37, contextGR=g2, plot.it=FALSE)
 We also collect locations of eQTL in the Stranger 2007
 multipopulation eQTL study.
 <<getstr>>=
-c17ts = c17tg[ which(mcols(c17tg)$type == "Stranger_eqtl") ]
+c17ts = c17tg[ which(S4Vectors::mcols(c17tg)$type == "Stranger_eqtl") ]
 eqloc = AnnotationTrack(c17ts,  chrom="chr17", genome="hg19", name="Str eQTL")
 displayPars(eqloc)$col = "black"
 displayPars(dsqs)$col = "red"
@@ -265,7 +265,7 @@ on the 6.0 chip, and stores the results in a GRanges instance.
 <<lkexp,keep.source=TRUE>>=
 gr6.0 = GRanges(seqnames=ifelse(is.na(locon6$chrom),0,locon6$chrom), 
        IRanges(ifelse(is.na(locon6$phys),1,locon6$phys), width=1))
-mcols(gr6.0)$rsid = as.character(locon6$dbsnp_rs_id)
+S4Vectors::mcols(gr6.0)$rsid = as.character(locon6$dbsnp_rs_id)
 seqlevels(gr6.0) = paste("chr", seqlevels(gr6.0), sep="")
 @
 
@@ -321,7 +321,7 @@ It is of interest to bind the counts back to the catalog data.
 <<domo>>=
 gwr = ebicat37
 gwr = gwr[colnames(h17),]
-mcols(gwr) = cbind(mcols(gwr), DataFrame(t(h17)))
+S4Vectors::mcols(gwr) = cbind(mcols(gwr), DataFrame(t(h17)))
 sn = rownames(h17)
 gwr[,c("DISEASE/TRAIT", sn[1:4])]
 @
