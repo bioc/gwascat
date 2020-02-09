@@ -7,8 +7,11 @@
 \alias{uri2node}
 \title{convert a typical OBO text file to a graphNEL instance (using Term elements)}
 \usage{
-obo2graphNEL(obo = "human-phenotype-ontology.obo",
-  kill = "\\\\[Typedef\\\\]", killTrailSp = TRUE)
+obo2graphNEL(
+  obo = "human-phenotype-ontology.obo",
+  kill = "\\\\[Typedef\\\\]",
+  killTrailSp = TRUE
+)
 }
 \arguments{
 \item{obo}{string naming a file in OBO format}

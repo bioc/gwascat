@@ -4,11 +4,16 @@
 \alias{gwcex2gviz}
 \title{Prepare salient components of GWAS catalog for rendering with Gviz}
 \usage{
-gwcex2gviz(basegr, contextGR = GRanges(seqnames = "chr17",
-  IRanges::IRanges(start = 37500000, width = 1e+06)),
+gwcex2gviz(
+  basegr,
+  contextGR = GRanges(seqnames = "chr17", IRanges::IRanges(start = 37500000, width =
+    1e+06)),
   txrefobj = TxDb.Hsapiens.UCSC.hg19.knownGene::TxDb.Hsapiens.UCSC.hg19.knownGene,
-  genome = "hg19", genesymobj = org.Hs.eg.db::org.Hs.eg.db,
-  plot.it = TRUE, maxmlp = 25)
+  genome = "hg19",
+  genesymobj = org.Hs.eg.db::org.Hs.eg.db,
+  plot.it = TRUE,
+  maxmlp = 25
+)
 }
 \arguments{
 \item{basegr}{gwaswloc instance containing information about GWAS in catalog}

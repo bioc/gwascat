@@ -5,8 +5,15 @@
 \title{expand a list of variants by including those in a VCF with LD exceeding some
 threshold}
 \usage{
-ldtagr(snprng, tf, samples, genome = "hg19", lbmaf = 0.05,
-  lbR2 = 0.8, radius = 1e+05)
+ldtagr(
+  snprng,
+  tf,
+  samples,
+  genome = "hg19",
+  lbmaf = 0.05,
+  lbR2 = 0.8,
+  radius = 1e+05
+)
 }
 \arguments{
 \item{snprng}{a named GRanges for a single SNP.  The name must correspond to

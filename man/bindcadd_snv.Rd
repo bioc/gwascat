@@ -4,8 +4,10 @@
 \alias{bindcadd_snv}
 \title{bind CADD scores of Kircher et al. 2014 to a GRanges instance}
 \usage{
-bindcadd_snv(gr,
-  fn = "http://krishna.gs.washington.edu/download/CADD/v1.0/1000G.tsv.gz")
+bindcadd_snv(
+  gr,
+  fn = "http://krishna.gs.washington.edu/download/CADD/v1.0/1000G.tsv.gz"
+)
 }
 \arguments{
 \item{gr}{query ranges to which CADD scores should be bound}

@@ -5,9 +5,13 @@
 \title{use ggbio facilities to display GWAS results for selected traits in genomic
 coordinates}
 \usage{
-traitsManh(gwr, selr = GRanges(seqnames = "chr17", IRanges(3e+07,
-  5e+07)), traits = c("Asthma", "Parkinson's disease", "Height",
-  "Crohn's disease"), truncmlp = 25, ...)
+traitsManh(
+  gwr,
+  selr = GRanges(seqnames = "chr17", IRanges(3e+07, 5e+07)),
+  traits = c("Asthma", "Parkinson's disease", "Height", "Crohn's disease"),
+  truncmlp = 25,
+  ...
+)
 }
 \arguments{
 \item{gwr}{GRanges instance as managed by the gwaswloc container design,

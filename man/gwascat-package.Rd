@@ -13,7 +13,6 @@
 \alias{gwrngs19}
 \alias{gwrngs38}
 \alias{ebicat38}
-\alias{ebicat37}
 \alias{impute.snps}
 \alias{SnpMatrix-class}
 \alias{si.hs.38}

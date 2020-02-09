@@ -4,9 +4,14 @@
 \alias{riskyAlleleCount}
 \title{given a matrix of subjects x SNP calls, count number of risky alleles}
 \usage{
-riskyAlleleCount(callmat, matIsAB = TRUE, chr, gwwl,
-  snpap = "SNPlocs.Hsapiens.dbSNP144.GRCh37", gencode = c("A/A", "A/B",
-  "B/B"))
+riskyAlleleCount(
+  callmat,
+  matIsAB = TRUE,
+  chr,
+  gwwl,
+  snpap = "SNPlocs.Hsapiens.dbSNP144.GRCh37",
+  gencode = c("A/A", "A/B", "B/B")
+)
 }
 \arguments{
 \item{callmat}{matrix with subjects as rows, SNPs as columns; entries can be

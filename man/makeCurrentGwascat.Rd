@@ -9,9 +9,12 @@ an effort is made to use reasonable data types for GRanges metadata, so some
 qualifying characters such as (EA) in Risk allele frequency field will
 simply be omitted during coercion of contents of that field to numeric.}
 \usage{
-
-  makeCurrentGwascat(table.url = "http://www.ebi.ac.uk/gwas/api/search/downloads/alternative",
-  fixNonASCII = TRUE, genome = "GRCh38", withOnt = TRUE)
+makeCurrentGwascat(
+  table.url = "http://www.ebi.ac.uk/gwas/api/search/downloads/alternative",
+  fixNonASCII = TRUE,
+  genome = "GRCh38",
+  withOnt = TRUE
+)
 }
 \arguments{
 \item{table.url}{string identifying the .txt file curated at EBI/EMBL}

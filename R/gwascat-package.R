@@ -32,7 +32,7 @@
 #' 
 #' @name gwascat-package
 #' @aliases gwascat-package gwascat g17SM gg17N gw6.rs_17 low17
-#' rules_6.0_1kg_17 DataFrame gwrngs19 gwrngs38 ebicat38 ebicat37 impute.snps
+#' rules_6.0_1kg_17 DataFrame gwrngs19 gwrngs38 ebicat38 impute.snps
 #' SnpMatrix-class si.hs.38
 #' @docType package
 #' @author VJ Carey <stvjc@@channing.harvard.edu>
@@ -237,5 +237,30 @@ NULL
 #' 
 NULL
 
+#' seqinfo for GRCh37
+#' @docType data
+#' @format Seqinfo instance
+#' @examples
+#' si.hs.37
+"si.hs.37" 
 
+#' a legacy representation of EBI's GWAS catalog with loci annotated to positions on GRCh37
+#' @docType data
+#' @format gwaswloc instance
+"ebicat37" 
+
+#' a legacy representation of EBI's GWAS catalog with loci annotated to positions on GRCh37 but
+#' UCSC chromosome names
+#' @docType data
+"ebicat37UCSC" 
+
+#' a legacy representation of EBI's GWAS catalog with loci annotated to positions on GRCh37
+#' @docType data
+#' @format gwaswloc instance
+"ebicat_b37" 
+
+#' a legacy representation of EBI's GWAS catalog with loci annotated to positions on GRCh38
+#' @docType data
+#' @format gwaswloc instance
+"ebicat_b38"
 
