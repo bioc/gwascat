@@ -7,7 +7,7 @@
 topTraits(gwwl, n = 10, tag = "DISEASE/TRAIT")
 }
 \arguments{
-\item{gwwl}{instance of \code{\linkS4class{gwaswloc}}}
+\item{gwwl}{instance of \code{{gwaswloc}}}
 
 \item{n}{numeric, number of traits to report}
 
@@ -17,7 +17,7 @@ topTraits(gwwl, n = 10, tag = "DISEASE/TRAIT")
 \code{topTraits} returns a character vector of most frequently
 occurring traits in the database
 
-\code{locs4trait} returns a \code{\linkS4class{gwaswloc}} object with
+\code{locs4trait} returns a \code{{gwaswloc}} object with
 records defining associations to the specified trait
 
 \code{chklocs} returns a logical that is TRUE when the asserted locations of
@@ -29,8 +29,8 @@ operations on GWAS catalog
 }
 \examples{
 
-data(ebicat38)
-topTraits(ebicat38)
+data(ebicat_2020_04_30)
+topTraits(ebicat_2020_04_30)
 
 }
 \author{

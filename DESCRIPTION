@@ -1,21 +1,21 @@
 Package: gwascat
 Title: representing and modeling data in the EMBL-EBI GWAS catalog
-Version: 2.21.0
+Version: 2.21.1
 Author: VJ Carey <stvjc@channing.harvard.edu>
 Description: Represent and model data in the EMBL-EBI GWAS catalog.
 Enhances: SNPlocs.Hsapiens.dbSNP144.GRCh37
-Depends: R (>= 3.5.0)
-Imports: methods, BiocGenerics, S4Vectors (>= 0.9.25), IRanges, GenomeInfoDb,
-        GenomicRanges (>= 1.29.6), GenomicFeatures,
-	Biostrings, Rsamtools, rtracklayer, AnnotationDbi, utils, ggplot2
-Suggests: DO.db, DT, knitr, RBGL, RUnit, snpStats,
+Depends: R (>= 3.5.0), methods
+Imports: S4Vectors (>= 0.9.25), IRanges, GenomeInfoDb,
+        GenomicRanges (>= 1.29.6), GenomicFeatures, readr,
+	Biostrings, AnnotationDbi, BiocFileCache
+Suggests: DO.db, DT, knitr, RBGL, testthat, snpStats,
 	Gviz, VariantAnnotation, AnnotationHub, gQTLstats,
 	graph, ggbio, DelayedArray,
 	TxDb.Hsapiens.UCSC.hg19.knownGene, org.Hs.eg.db, BiocStyle
-VignetteBuilder: utils, knitr
+VignetteBuilder: knitr
 Maintainer: VJ Carey <stvjc@channing.harvard.edu>
 License: Artistic-2.0
-LazyData: yes
+LazyData: no
 biocViews: Genetics
-RoxygenNote: 7.0.2
+RoxygenNote: 7.1.0
 Encoding: UTF-8

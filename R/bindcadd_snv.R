@@ -19,9 +19,10 @@
 #' @keywords models
 #' @examples
 #' 
-#'  if (interactive()) {
-#'   data(ebicat37)
-#'   g2 = as(ebicat37, "GRanges")
+#'  \dontrun{
+#'   data(ebicat_2020_04_30)
+#'   g2 = as(ebicat_2020_04_30, "GRanges")
+#'  # would need to lift over here 
 #'   bindcadd_snv( g2[which(seqnames(g2)=="chr2")][1:20] )
 #'   }
 #' 

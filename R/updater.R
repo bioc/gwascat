@@ -1,19 +1,3 @@
-makeCurrentGwascat.legacy = function(table.url="http://www.genome.gov/admin/gwascatalog.txt", fixNonASCII=TRUE, useHg38seqinfo = TRUE, altSeqinfo) {
- tab = read.delim(url(table.url), sep="\t", header=TRUE, check.names=FALSE, stringsAsFactors=FALSE)
- if (missing(altSeqinfo) & !useHg38seqinfo) stop("need an altSeqinfo when  useHg38seqinfo is FALSE")
- if (fixNonASCII) tab = fixNonASCII(tab)
- cur = gwdf2GRanges(tab, extractDate=as.character(Sys.Date()))
- seqlevelsStyle(cur) = "NCBI"
- cursn = seqlevels(cur)
- if (useHg38seqinfo) {
-    data(si.hs.38)  
-    seqinfo(cur) = si.hs.38[cursn]
-    }
- else seqinfo(cur) = altSeqinfo[cursn]
- cur
-}
-
-
 
 #' read NHGRI GWAS catalog table and construct associated GRanges instance
 #' records for which clear genomic position cannot be determined are dropped
@@ -21,7 +5,7 @@ makeCurrentGwascat.legacy = function(table.url="http://www.genome.gov/admin/gwas
 #' an effort is made to use reasonable data types for GRanges metadata, so some
 #' qualifying characters such as (EA) in Risk allele frequency field will
 #' simply be omitted during coercion of contents of that field to numeric.
-#' @importFrom GenomeInfoDb genome "genome<-"
+#' @importFrom GenomeInfoDb genome "genome<-" seqnames
 #' 
 #' @param table.url string identifying the .txt file curated at EBI/EMBL
 #' @param fixNonASCII logical, if TRUE, non-ASCII characters as identified by
@@ -49,14 +33,17 @@ makeCurrentGwascat = function(table.url=
   "http://www.ebi.ac.uk/gwas/api/search/downloads/alternative",
    fixNonASCII=TRUE, genome="GRCh38", withOnt=TRUE) {
  stopifnot(genome %in% c("GRCh37", "GRCh38"))
- suppressWarnings({
+ tf = tempfile()
  if (!withOnt) table.url = sub("alternative", "full", table.url)
- message(paste0("running read.delim on ", table.url, "..."))
- tab = read.delim(url(table.url), sep="\t", header=TRUE, check.names=FALSE, stringsAsFactors=FALSE)
- })
+ tst = try(download.file(table.url, destfile=tf))
+ if (inherits(tst, "try-error")) stop("could not complete download")
+ tab = readr::read_tsv(tf) #, sep="\t", header=TRUE, check.names=FALSE, stringsAsFactors=FALSE)
  message(paste0("formatting gwaswloc instance..."))
+ tab = as.data.frame(tab)
  if (fixNonASCII) tab = fixNonASCII(tab)
- cur = gwdf2GRanges(tab, extractDate=as.character(Sys.Date()))
+ cur_plus = gwdf2GRanges(tab, extractDate=as.character(Sys.Date()))
+ cur = cur_plus$okrngs
+ nogr = cur_plus$nogr
  seqlevelsStyle(cur) = "NCBI"
  cursn = seqlevels(cur)
  data(si.hs.38)  
@@ -65,6 +52,7 @@ makeCurrentGwascat = function(table.url=
  metadata(cur) = list(
     date.created = date(),
     creation = match.call(),
+    badpos = nogr,
     sessInfo.creation = sessionInfo()
     )
  message("done.")

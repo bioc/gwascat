@@ -10,7 +10,7 @@ chklocs(chrtag = "20", gwwl = gwrngs19)
 \arguments{
 \item{chrtag}{character, chromosome identifier}
 
-\item{gwwl}{instance of \code{\linkS4class{gwaswloc}}}
+\item{gwwl}{instance of \code{{gwaswloc}}}
 }
 \description{
 return TRUE if all named SNPs with locations in both

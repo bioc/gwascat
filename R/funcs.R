@@ -1,13 +1,13 @@
 #' 
 #' operations on GWAS catalog
 #' 
-#' @param gwwl instance of \code{\linkS4class{gwaswloc}}
+#' @param gwwl instance of \code{{gwaswloc}}
 #' @param n numeric, number of traits to report
 #' @param tag character, name of field to be used for trait enumeration
 #' @return \code{topTraits} returns a character vector of most frequently
 #' occurring traits in the database
 #' 
-#' \code{locs4trait} returns a \code{\linkS4class{gwaswloc}} object with
+#' \code{locs4trait} returns a \code{{gwaswloc}} object with
 #' records defining associations to the specified trait
 #' 
 #' \code{chklocs} returns a logical that is TRUE when the asserted locations of
@@ -17,8 +17,8 @@
 #' @keywords models
 #' @examples
 #' 
-#' data(ebicat38)
-#' topTraits(ebicat38)
+#' data(ebicat_2020_04_30)
+#' topTraits(ebicat_2020_04_30)
 #' 
 #' @export topTraits
 topTraits = function(gwwl, n=10, tag="DISEASE/TRAIT") {
@@ -26,7 +26,7 @@ topTraits = function(gwwl, n=10, tag="DISEASE/TRAIT") {
 }
 
 #' get locations for SNP affecting a selected trait
-#' @param gwwl instance of \code{\linkS4class{gwaswloc}}
+#' @param gwwl instance of \code{{gwaswloc}}
 #' @param trait character, name of trait
 #' @param tag character, name of field to be used for trait enumeration
 #' @export
@@ -41,9 +41,8 @@ locs4trait = function(gwwl, trait, tag="DISEASE/TRAIT") {
 
 #' return TRUE if all named SNPs with locations in both
 #' the SNPlocs package and the gwascat agree 
-#' @param gwwl instance of \code{\linkS4class{gwaswloc}}
+#' @param gwwl instance of \code{{gwaswloc}}
 #' @param chrtag character, chromosome identifier
-#' @export
 chklocs = function(chrtag="20", gwwl=gwrngs19) {
 #
 # return TRUE if all named SNPs with locations in both
@@ -193,7 +192,7 @@ ABmat2nuc = function(abmat, chr, snpannopk="SNPlocs.Hsapiens.dbSNP144.GRCh37",
 #' be run
 #' @param chr code for chromosome, should work with the SNP annotation
 #' getSNPlocs function, so likely "ch[nn]"
-#' @param gwwl an instance of \code{\linkS4class{gwaswloc}}
+#' @param gwwl an instance of \code{{gwaswloc}}
 #' @param snpap name of a Bioconductor SNPlocs.Hsapiens.dbSNP.* package
 #' @param gencode codes used for generic SNP call
 #' @return matrix with rows corresponding to subjects , columns corresponding
@@ -201,6 +200,7 @@ ABmat2nuc = function(abmat, chr, snpannopk="SNPlocs.Hsapiens.dbSNP144.GRCh37",
 #' @keywords models
 #' @examples
 #' 
+#' \dontrun{
 #' data(gg17N) # translated from GGdata chr 17 calls using ABmat2nuc
 #' data(ebicat37)
 #' library(GenomeInfoDb)
@@ -208,6 +208,7 @@ ABmat2nuc = function(abmat, chr, snpannopk="SNPlocs.Hsapiens.dbSNP144.GRCh37",
 #' h17 = riskyAlleleCount(gg17N, matIsAB=FALSE, chr="ch17", gwwl=ebicat37)
 #' h17[1:5,1:5]
 #' table(as.numeric(h17))
+#' }
 #' 
 #' @export riskyAlleleCount
 riskyAlleleCount = function(callmat, matIsAB=TRUE, chr,

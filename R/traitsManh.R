@@ -23,10 +23,10 @@
 #' 
 #' # do a p-value truncation if you want to reduce compression
 #' \dontrun{  # ggbio July 2018
-#' data(ebicat38)
+#' data(ebicat_2020_04_30)
 #' library(GenomeInfoDb)
-#' seqlevelsStyle(ebicat38) = "UCSC"
-#' traitsManh(ebicat38)
+#' seqlevelsStyle(ebicat_2020_04_30) = "UCSC"
+#' traitsManh(ebicat_2020_04_30)
 #'  }
 #' 
 #' @export traitsManh

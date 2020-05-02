@@ -1,9 +1,10 @@
 #' 
 #' Prepare salient components of GWAS catalog for rendering with Gviz
 #' 
-#' @importFrom S4Vectors mcols "mcols<-"
+#' @importFrom S4Vectors mcols "mcols<-" metadata "metadata<-"
 #' @importFrom GenomicFeatures exons
 #' @importFrom AnnotationDbi mapIds
+#' @importFrom IRanges overlapsAny
 #' @param basegr gwaswloc instance containing information about GWAS in catalog
 #' @param contextGR A GRanges instance delimiting the visualization in genomic
 #' coordinates
@@ -17,9 +18,9 @@
 #' @keywords graphics
 #' @examples
 #' 
-#'  data(ebicat37)
-#'  GenomeInfoDb::seqlevelsStyle(ebicat37) = "UCSC"
-#'  gwcex2gviz(ebicat37)
+#'  data(ebicat_2020_04_30)
+#'  GenomeInfoDb::seqlevelsStyle(ebicat_2020_04_30) = "UCSC"
+#'  gwcex2gviz(ebicat_2020_04_30)
 #' 
 #' @export gwcex2gviz
 gwcex2gviz = function( basegr, 

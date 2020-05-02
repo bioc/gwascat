@@ -24,7 +24,7 @@ be run}
 \item{chr}{code for chromosome, should work with the SNP annotation
 getSNPlocs function, so likely "ch[nn]"}
 
-\item{gwwl}{an instance of \code{\linkS4class{gwaswloc}}}
+\item{gwwl}{an instance of \code{{gwaswloc}}}
 
 \item{snpap}{name of a Bioconductor SNPlocs.Hsapiens.dbSNP.* package}
 
@@ -40,6 +40,7 @@ various conditions, relative to NHGRI GWAS catalog
 }
 \examples{
 
+\dontrun{
 data(gg17N) # translated from GGdata chr 17 calls using ABmat2nuc
 data(ebicat37)
 library(GenomeInfoDb)
@@ -47,6 +48,7 @@ seqlevelsStyle(ebicat37) = "UCSC"
 h17 = riskyAlleleCount(gg17N, matIsAB=FALSE, chr="ch17", gwwl=ebicat37)
 h17[1:5,1:5]
 table(as.numeric(h17))
+}
 
 }
 \keyword{models}

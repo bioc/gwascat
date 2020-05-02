@@ -7,7 +7,7 @@
 locs4trait(gwwl, trait, tag = "DISEASE/TRAIT")
 }
 \arguments{
-\item{gwwl}{instance of \code{\linkS4class{gwaswloc}}}
+\item{gwwl}{instance of \code{{gwaswloc}}}
 
 \item{trait}{character, name of trait}
 

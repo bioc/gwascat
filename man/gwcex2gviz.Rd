@@ -38,9 +38,9 @@ Prepare salient components of GWAS catalog for rendering with Gviz
 }
 \examples{
 
- data(ebicat37)
- GenomeInfoDb::seqlevelsStyle(ebicat37) = "UCSC"
- gwcex2gviz(ebicat37)
+ data(ebicat_2020_04_30)
+ GenomeInfoDb::seqlevelsStyle(ebicat_2020_04_30) = "UCSC"
+ gwcex2gviz(ebicat_2020_04_30)
 
 }
 \keyword{graphics}
