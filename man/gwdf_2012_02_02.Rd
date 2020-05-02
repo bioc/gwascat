@@ -5,7 +5,9 @@
 \alias{gwdf_2012_02_02}
 \alias{gwdf_2014_09_08}
 \title{internal data frame for NHGRI GWAS catalog}
-\format{A data frame with 17832 observations on the following 34 variables.}
+\format{
+A data frame with 17832 observations on the following 34 variables.
+}
 \source{
 \url{http://www.ebi.ac.uk/gwas/}
 }

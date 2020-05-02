@@ -1,5 +1,5 @@
 makeCurrentGwascat.legacy = function(table.url="http://www.genome.gov/admin/gwascatalog.txt", fixNonASCII=TRUE, useHg38seqinfo = TRUE, altSeqinfo) {
- tab = read.delim(url(table.url), sep="\t", header=TRUE, check.names=FALSE, stringsAsFactors=FALSE)
+ tab = read.delim(url(table.url), sep="\t", header=TRUE, check.names=FALSE, stringsAsFactors=FALSE, quote="")
  if (missing(altSeqinfo) & !useHg38seqinfo) stop("need an altSeqinfo when  useHg38seqinfo is FALSE")
  if (fixNonASCII) tab = fixNonASCII(tab)
  cur = gwdf2GRanges(tab, extractDate=as.character(Sys.Date()))
@@ -21,7 +21,8 @@ makeCurrentGwascat.legacy = function(table.url="http://www.genome.gov/admin/gwas
 #' an effort is made to use reasonable data types for GRanges metadata, so some
 #' qualifying characters such as (EA) in Risk allele frequency field will
 #' simply be omitted during coercion of contents of that field to numeric.
-#' @importFrom GenomeInfoDb genome "genome<-"
+#' @importFrom GenomeInfoDb genome "genome<-" seqinfo "seqinfo<-"
+#' @importFrom S4Vectors metadata "metadata<-"
 #' 
 #' @param table.url string identifying the .txt file curated at EBI/EMBL
 #' @param fixNonASCII logical, if TRUE, non-ASCII characters as identified by
@@ -52,7 +53,7 @@ makeCurrentGwascat = function(table.url=
  suppressWarnings({
  if (!withOnt) table.url = sub("alternative", "full", table.url)
  message(paste0("running read.delim on ", table.url, "..."))
- tab = read.delim(url(table.url), sep="\t", header=TRUE, check.names=FALSE, stringsAsFactors=FALSE)
+ tab = read.delim(url(table.url), sep="\t", header=TRUE, check.names=FALSE, stringsAsFactors=FALSE, quote="")
  })
  message(paste0("formatting gwaswloc instance..."))
  if (fixNonASCII) tab = fixNonASCII(tab)

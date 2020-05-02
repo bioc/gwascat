@@ -4,7 +4,9 @@
 \name{ebicat_b38}
 \alias{ebicat_b38}
 \title{a legacy representation of EBI's GWAS catalog with loci annotated to positions on GRCh38}
-\format{gwaswloc instance}
+\format{
+gwaswloc instance
+}
 \usage{
 ebicat_b38
 }

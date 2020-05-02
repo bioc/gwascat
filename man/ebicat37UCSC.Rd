@@ -5,7 +5,9 @@
 \alias{ebicat37UCSC}
 \title{a legacy representation of EBI's GWAS catalog with loci annotated to positions on GRCh37 but
 UCSC chromosome names}
-\format{An object of class \code{gwaswloc} of length 22688.}
+\format{
+An object of class \code{gwaswloc} of length 22688.
+}
 \usage{
 ebicat37UCSC
 }

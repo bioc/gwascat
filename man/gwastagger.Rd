@@ -4,7 +4,8 @@
 \name{gwastagger}
 \alias{gwastagger}
 \title{data on 1000 genomes SNPs that 'tag' GWAS catalog entries}
-\format{The format is:\cr Formal class 'GRanges' [package "GenomicRanges"]
+\format{
+The format is:\cr Formal class 'GRanges' [package "GenomicRanges"]
 with 6 slots\cr ..@ seqnames :Formal class 'Rle' [package "IRanges"] with 4
 slots\cr .. .. ..@ values : Factor w/ 24 levels "chr1","chr2",..: 1 2 3 4 5
 6 7 8 9 10 ...\cr .. .. ..@ lengths : int [1:22] 24042 23740 21522 14258
@@ -31,7 +32,8 @@ list()\cr ..@ seqinfo :Formal class 'Seqinfo' [package "GenomicRanges"] with
 191154276 180915260 171115067 159138663 146364022 141213431 135534747 ...\cr
 .. .. ..@ is_circular: logi [1:24] FALSE FALSE FALSE FALSE FALSE FALSE
 ...\cr .. .. ..@ genome : chr [1:24] "hg19" "hg19" "hg19" "hg19" ...\cr ..@
-metadata : list()\cr}
+metadata : list()\cr
+}
 \source{
 NHGRI GWAS catalog; plink is used with the 1000 genomes VCF in a
 perl routine by Michael McGeachie, Harvard Medical School;

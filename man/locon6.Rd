@@ -4,10 +4,12 @@
 \name{locon6}
 \alias{locon6}
 \title{location information for 10000 SNPs probed on Affy GW 6.0}
-\format{A data frame with 10000 observations on the following 3 variables.
+\format{
+A data frame with 10000 observations on the following 3 variables.
 \describe{ \item{dbsnp_rs_id}{a character vector}
 \item{chrom}{a character vector} \item{physical_pos}{a
-numeric vector} }}
+numeric vector} }
+}
 \description{
 location information for 10000 SNPs probed on Affy GW 6.0
 }

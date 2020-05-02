@@ -4,7 +4,9 @@
 \name{si.hs.37}
 \alias{si.hs.37}
 \title{seqinfo for GRCh37}
-\format{Seqinfo instance}
+\format{
+Seqinfo instance
+}
 \usage{
 si.hs.37
 }
