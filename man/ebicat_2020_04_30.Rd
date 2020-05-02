@@ -3,7 +3,7 @@
 \docType{data}
 \name{ebicat_2020_04_30}
 \alias{ebicat_2020_04_30}
-\title{serialized gwaswloc instance from april 30 2020}
+\title{serialized gwaswloc instance from april 30 2020, sample of 50000 records}
 \format{
 gwaswloc instance
 }
@@ -11,6 +11,6 @@ gwaswloc instance
 ebicat_2020_04_30
 }
 \description{
-serialized gwaswloc instance from april 30 2020
+serialized gwaswloc instance from april 30 2020, sample of 50000 records
 }
 \keyword{datasets}

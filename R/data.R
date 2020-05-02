@@ -1,7 +1,7 @@
 #  ‘ebicat_2020_04_30’ ‘g17SM’ ‘gg17N’ ‘gw6.rs_17’ ‘gwastagger’ ‘locon6’
 #  ‘low17’ ‘si.hs.37’ ‘si.hs.38’
 
-#' serialized gwaswloc instance from april 30 2020
+#' serialized gwaswloc instance from april 30 2020, sample of 50000 records
 #' @docType data
 #' @format gwaswloc instance
 "ebicat_2020_04_30"

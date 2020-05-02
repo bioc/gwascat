@@ -7,14 +7,12 @@ vignette: >
   %\VignetteIndexEntry{gwascat: structuring and querying the NHGRI GWAS catalog}
   %\VignetteEncoding{UTF-8}
 output:
-  BiocStyle::pdf_document:
-    toc: yes
-    number_sections: yes
   BiocStyle::html_document:
     highlight: pygments
     number_sections: yes
     theme: united
     toc: yes
+bibliography: gwascat.bib
 ---
 
 
@@ -74,13 +72,14 @@ library(gwascat)
 objects("package:gwascat")
 ```
 
-The extended GRanges instance with all SNP-disease associations is
-obtained as follows, using the GRCh38 genome build.
+An extended GRanges instance with a sample of 50000 SNP-disease associations reported
+on 30 April 2020 is
+obtained as follows, with addresses based on the GRCh38 genome build.
 ```{r lkgr}
 data(ebicat_2020_04_30)
 ```
 
-To determine the most frequently occurring traits:
+To determine the most frequently occurring traits in this sample:
 ```{r lktr}
 topTraits(ebicat_2020_04_30)
 ```
@@ -301,7 +300,7 @@ individuals with particular risk profiles.
 
 ## Diseases: Disease Ontology
 
-The Disease Ontology project \cite{Osborne:2009p4571} formalizes a vocabulary
+The Disease Ontology project @Osborne:2009p4571 formalizes a vocabulary
 for human diseases.  Bioconductor's DO.db package is a curated
 representation.
 
@@ -386,7 +385,7 @@ More work on formalization of trait terms is underway.
 
 # CADD scores
 
-Kircher et al. \citep{Kircher:2014p5681} define combined annotation-dependent
+@Kircher:2014p5681 define combined annotation-dependent
 depletion scores measuring variant pathogenicity in an integrative way.
 Small requests to bind scores for SNV to GRanges can be resolved
 through HTTP; large requests can be carried out on a local tabix-indexed
@@ -455,14 +454,14 @@ if ("SNPlocs.Hsapiens.dbSNP144.GRCh37" %in% installed.packages()[,1]) {
 ```
 This is not a fast procedure.  
 
-## Acknowledgment 
+# Acknowledgment 
 
 The development of this software was supported in part
 by Robert Gentleman and the
 Computational Biology Group of
 Genentech, Inc.
 
+# References
 
 \bibliography{gwascat}
 
-\end{document}

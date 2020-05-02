@@ -1,1 +1,4 @@
-BiocGenerics:::testPackage("gwascat")
+library(testthat)
+
+test_check("gwascat")
+
