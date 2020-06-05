@@ -5,7 +5,7 @@
 \alias{locon6}
 \title{location data for 10000 SNP}
 \format{
-data.frame
+data.frame, coordinates are hg19
 }
 \usage{
 locon6

@@ -31,7 +31,7 @@
 
 #' location data for 10000 SNP
 #' @docType data
-#' @format data.frame
+#' @format data.frame, coordinates are hg19
 "locon6"
 
 #' SnpMatrix instance from chr17
@@ -48,3 +48,8 @@
 #' @docType data
 #' @format GenomeInfoDb Seqinfo instance
 "si.hs.38" 
+
+#' image of locon6 in GRanges, lifted over to hg38
+#' @docType data
+#' @format GRanges instance
+"gr6.0_hg38"

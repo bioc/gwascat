@@ -225,21 +225,24 @@ of 1bp.
 
 The following code retrieves coordinates for SNP interrogated
 on 10000 probes (to save time)
-on the 6.0 chip, and stores the results in a GRanges instance.
+on the 6.0 chip, in a GRanges instance that was lifted over to GRCh38.
+The data statement is preceded by legacy code that produced
+an instance with hg19 coordinates.
 ```{r lkexp,keep.source=TRUE}
-gr6.0 = GRanges(seqnames=ifelse(is.na(locon6$chrom),0,locon6$chrom), 
-       IRanges(ifelse(is.na(locon6$phys),1,locon6$phys), width=1))
-S4Vectors::mcols(gr6.0)$rsid = as.character(locon6$dbsnp_rs_id)
-seqlevels(gr6.0) = paste("chr", seqlevels(gr6.0), sep="")
+#gr6.0 = GRanges(seqnames=ifelse(is.na(locon6$chrom),0,locon6$chrom), 
+#       IRanges(ifelse(is.na(locon6$phys),1,locon6$phys), width=1))
+#S4Vectors::mcols(gr6.0)$rsid = as.character(locon6$dbsnp_rs_id)
+#seqlevels(gr6.0) = paste("chr", seqlevels(gr6.0), sep="")
+data(gr6.0_hg38)
 ```
 
 Here we compute overlaps with both the raw disease-associated locus
 addresses, and with the locus address $\pm$ 500bp.
 ```{r dosub}
 ag = function(x) as(x, "GRanges")
-ovraw = suppressWarnings(subsetByOverlaps(ag(ebicat_2020_04_30), gr6.0))
+ovraw = suppressWarnings(subsetByOverlaps(ag(ebicat_2020_04_30), gr6.0_hg38))
 length(ovraw)
-ovaug = suppressWarnings(subsetByOverlaps(ag(ebicat_2020_04_30+500), gr6.0))
+ovaug = suppressWarnings(subsetByOverlaps(ag(ebicat_2020_04_30+500), gr6.0_hg38))
 length(ovaug)
 ```
 
