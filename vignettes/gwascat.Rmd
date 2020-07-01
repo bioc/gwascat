@@ -75,19 +75,21 @@ objects("package:gwascat")
 An extended GRanges instance with a sample of 50000 SNP-disease associations reported
 on 30 April 2020 is
 obtained as follows, with addresses based on the GRCh38 genome build.
+We use `gwtrunc` to refer to it in the sequel.
 ```{r lkgr}
 data(ebicat_2020_04_30)
+gwtrunc = ebicat_2020_04_30
 ```
 
 To determine the most frequently occurring traits in this sample:
 ```{r lktr}
-topTraits(ebicat_2020_04_30)
+topTraits(gwtrunc)
 ```
 
 For a given trait, obtain a GRanges with all recorded associations; here
 only three associations are shown:
 ```{r lklocs}
-subsetByTraits(ebicat_2020_04_30, tr="LDL cholesterol")[1:3]
+subsetByTraits(gwtrunc, tr="LDL cholesterol")[1:3]
 ```
 
 # Some visualizations
@@ -100,14 +102,14 @@ chromosomes 4:6.  First, we create a version of the
 catalog with $-log_{10} p$ truncated at a maximum value of 25.
 
 ```{r lkm,results='hide'}
-gwtrunc = ebicat_2020_04_30
 requireNamespace("S4Vectors")
 mcols = S4Vectors::mcols
-mlpv = mcols(ebicat_2020_04_30)$PVALUE_MLOG
+mlpv = mcols(gwtrunc)$PVALUE_MLOG
 mlpv = ifelse(mlpv > 25, 25, mlpv)
 S4Vectors::mcols(gwtrunc)$PVALUE_MLOG = mlpv
 library(GenomeInfoDb)
-seqlevelsStyle(gwtrunc) = "UCSC"
+# seqlevelsStyle(gwtrunc) = "UCSC" # no more!
+seqlevels(gwtrunc) = paste0("chr", seqlevels(gwtrunc))
 gwlit = gwtrunc[ which(as.character(seqnames(gwtrunc)) %in% c("chr4", "chr5", "chr6")) ]
 library(ggbio)
 mlpv = mcols(gwlit)$PVALUE_MLOG
@@ -160,8 +162,7 @@ We start the construction of the graph here.
 ```{r dost}
 g2 = GRanges(seqnames="chr17", IRanges(start=4.3e7, width=2e6))
 
-seqlevelsStyle(ebicat_2020_04_30) = "UCSC"
-basic = gwcex2gviz(basegr = ebicat_2020_04_30, contextGR=g2, plot.it=FALSE) 
+basic = gwcex2gviz(basegr = gwtrunc, contextGR=g2, plot.it=FALSE) 
 ```
 
 We also collect locations of eQTL in the Stranger 2007
@@ -212,7 +213,7 @@ are common to both the chip and the GWAS catalog.
 We then tabulate the diseases associated with the
 common loci.
 ```{r lkdtab}
-intr = ebicat_2020_04_30[ intersect(getRsids(ebicat_2020_04_30), rson6) ]
+intr = gwtrunc[ intersect(getRsids(gwtrunc), rson6) ]
 sort(table(getTraits(intr)), decreasing=TRUE)[1:10]
 ```
 
@@ -240,9 +241,9 @@ Here we compute overlaps with both the raw disease-associated locus
 addresses, and with the locus address $\pm$ 500bp.
 ```{r dosub}
 ag = function(x) as(x, "GRanges")
-ovraw = suppressWarnings(subsetByOverlaps(ag(ebicat_2020_04_30), gr6.0_hg38))
+ovraw = suppressWarnings(subsetByOverlaps(ag(gwtrunc), gr6.0_hg38))
 length(ovraw)
-ovaug = suppressWarnings(subsetByOverlaps(ag(ebicat_2020_04_30+500), gr6.0_hg38))
+ovaug = suppressWarnings(subsetByOverlaps(ag(gwtrunc+500), gr6.0_hg38))
 length(ovaug)
 ```
 
@@ -251,14 +252,14 @@ within 500bp, use:
 ```{r dosub2}
 rawrs = mcols(ovraw)$SNPS
 augrs = mcols(ovaug)$SNPS
-ebicat_2020_04_30[augrs]
+gwtrunc[augrs]
 ```
 
 Relaxing the intersection criterion in this
 limited case leads to a larger set of traits.
 
 ```{r lkrelax}
-nn = setdiff( getTraits(ebicat_2020_04_30[augrs]), getTraits(ebicat_2020_04_30[rawrs]) )
+nn = setdiff( getTraits(gwtrunc[augrs]), getTraits(gwtrunc[rawrs]) )
 length(nn)
 head(nn)
 tail(nn)
@@ -282,14 +283,14 @@ the \texttt{matIsAB} parameter to false in this call.
 
 ```{r dorun}
 h17 = riskyAlleleCount(gg17N, matIsAB=FALSE, chr="ch17",
- gwwl = ebicat_2020_04_30)
+ gwwl = gwtrunc)
 h17[1:5,1:5]
 table(as.numeric(h17))
 ```
 
 It is of interest to bind the counts back to the catalog data.
 ```{r domo}
-gwr = ebicat_2020_04_30
+gwr = gwtrunc
 gwr = gwr[colnames(h17),]
 S4Vectors::mcols(gwr) = cbind(mcols(gwr), DataFrame(t(h17)))
 sn = rownames(h17)
@@ -323,7 +324,7 @@ Direct mapping from disease trait tokens in the catalog
 to this vocabulary succeeds for a modest proportion of
 records.
 ```{r dohit}
-cattra = mcols(ebicat_2020_04_30)$`DISEASE/TRAIT`
+cattra = mcols(gwtrunc)$`DISEASE/TRAIT`
 mat = match(tolower(cattra), tolower(allt))
 catDO = names(allt)[mat]
 na.omit(catDO)[1:50]
@@ -395,7 +396,7 @@ through HTTP; large requests can be carried out on a local tabix-indexed
 selection from their archive.
 
 ```{r chkcadd,eval=FALSE}
-g3 = as(ebicat_2020_04_30, "GRanges")
+g3 = as(gwtrunc, "GRanges")
 bg3 = bindcadd_snv( g3[which(seqnames(g3)=="chr3")][1:20] )
 inds = ncol(mcols(bg3))
 bg3[, (inds-3):inds]
@@ -452,7 +453,7 @@ gwas catalog,
 ```{r getrs,keep.source=TRUE,cache=FALSE,eval=FALSE}
 if ("SNPlocs.Hsapiens.dbSNP144.GRCh37" %in% installed.packages()[,1]) {
  library(SNPlocs.Hsapiens.dbSNP144.GRCh37)
- chklocs("20", ebicat_2020_04_30)
+ chklocs("20", gwtrunc)
 }
 ```
 This is not a fast procedure.  

@@ -1,6 +1,6 @@
 Package: gwascat
 Title: representing and modeling data in the EMBL-EBI GWAS catalog
-Version: 2.21.4
+Version: 2.21.5
 Author: VJ Carey <stvjc@channing.harvard.edu>
 Description: Represent and model data in the EMBL-EBI GWAS catalog.
 Enhances: SNPlocs.Hsapiens.dbSNP144.GRCh37
@@ -17,5 +17,5 @@ Maintainer: VJ Carey <stvjc@channing.harvard.edu>
 License: Artistic-2.0
 LazyData: no
 biocViews: Genetics
-RoxygenNote: 7.1.0
+RoxygenNote: 7.1.1
 Encoding: UTF-8
