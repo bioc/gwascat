@@ -3,7 +3,7 @@
 \name{ldtagr}
 \alias{ldtagr}
 \title{expand a list of variants by including those in a VCF with LD exceeding some
-threshold}
+threshold; uses snpStats ld()}
 \usage{
 ldtagr(
   snprng,
@@ -38,29 +38,19 @@ fields 'paramRangeID' (base variant input) and 'R2'
 }
 \description{
 expand a list of variants by including those in a VCF with LD exceeding some
-threshold
-}
-\details{
-uses snpStats ld()
+threshold; uses snpStats ld()
 }
 \note{
 slow but safe approach.  probably a matrix method could be substituted
 using the nice sparse approach already in snpStats
 }
 \examples{
-
-require(GenomicRanges)
-if (requireNamespace("gQTLstats")) {
-   # install gQTLstats to test this function
- cand = GRanges("1", IRanges(113038694, width=1))
+ cand = GenomicRanges::GRanges("1", IRanges::IRanges(113038694, width=1))
  names(cand) = "rs883593"
- require(VariantAnnotation)
+ requireNamespace("VariantAnnotation")
  expath = dir(system.file("vcf", package="gwascat"), patt=".*exon.*gz$", full=TRUE)
- tf = TabixFile(expath)
+ tf = Rsamtools::TabixFile(expath)
  ldtagr( cand, tf, lbR2 = .8)
-}
-# should do with 1000 genomes in S3 bucket and gwascat
-
 }
 \author{
 VJ Carey
