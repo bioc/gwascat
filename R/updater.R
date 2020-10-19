@@ -6,6 +6,7 @@
 #' qualifying characters such as (EA) in Risk allele frequency field will
 #' simply be omitted during coercion of contents of that field to numeric.
 #' @importFrom GenomeInfoDb genome genome<- seqnames seqlevelsStyle seqlevelsStyle<- seqlevels seqlevels<- seqinfo seqinfo<-
+#' @import readr
 #' 
 #' @param table.url string identifying the .txt file curated at EBI/EMBL
 #' @param fixNonASCII logical, if TRUE, non-ASCII characters as identified by
@@ -37,7 +38,25 @@ makeCurrentGwascat = function(table.url=
  if (!withOnt) table.url = sub("alternative", "full", table.url)
  tst = try(download.file(table.url, destfile=tf))
  if (inherits(tst, "try-error")) stop("could not complete download")
- tab = readr::read_tsv(tf) #, sep="\t", header=TRUE, check.names=FALSE, stringsAsFactors=FALSE)
+
+ ct = readr::cols(
+  .default = col_character(),
+  `DATE ADDED TO CATALOG` = col_date(format = ""),
+  PUBMEDID = col_double(),
+  DATE = col_date(format = ""),
+  CHR_ID = col_character(),
+  CHR_POS = col_double(),
+  UPSTREAM_GENE_DISTANCE = col_double(),
+  DOWNSTREAM_GENE_DISTANCE = col_double(),
+  MERGED = col_double(),
+  SNP_ID_CURRENT = col_double(),
+  INTERGENIC = col_double(),
+  `P-VALUE` = col_double(),
+  PVALUE_MLOG = col_double(),
+  `OR or BETA` = col_double()
+)
+
+ tab = readr::read_tsv(tf, col_types=ct) #, sep="\t", header=TRUE, check.names=FALSE, stringsAsFactors=FALSE)
  message(paste0("formatting gwaswloc instance..."))
  tab = as.data.frame(tab)
  if (fixNonASCII) tab = fixNonASCII(tab)
