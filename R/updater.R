@@ -102,3 +102,38 @@ lo38to19 = function(gwwl) {
  new("gwaswloc", extractDate=date(), g19)
 }
 
+#' grab an image of EBI GWAS catalog from AnnotationHub
+#' @param tag character(1) defaults to "AH91571" which is the 3.30.2021 image
+#' @param simple logical(1) if TRUE, just returns data.frame as retrieved from EBI; defaults to FALSE
+#' @param fixNonASCII logical(1) if TRUE, use iconv to identify and eliminate non-ASCII content
+#' @return If `simple`, a data.frame is returned based on TSV data produced by EBI.  Otherwise, non-ASCII
+#' content is processed according to the value of
+#' `fixNonASCII` and a `gwaswloc` instance is returned, which has a concise
+#' show method.  This can be coerced to a simple
+#' GRanges instance with as(..., "GRanges").  The reference build is GRCh38.
+#' @examples
+#' gwcat = gwascat_from_AHub()
+#' gwcat
+#' @export
+gwascat_from_AHub = function(tag = "AH91571", simple=FALSE,
+    fixNonASCII=TRUE) {
+ ah = AnnotationHub::AnnotationHub()
+ tab = as.data.frame(ah[[tag]])
+ if (simple) return(tab)
+ adate = mcols(ah[tag,])$description
+ if (fixNonASCII) tab = fixNonASCII(tab)
+ cur_plus = gwdf2GRanges(tab, extractDate=adate)
+ cur = cur_plus$okrngs
+ nogr = cur_plus$nogr
+ seqlevelsStyle(cur) = "NCBI"
+ cursn = seqlevels(cur)
+ data(si.hs.38)  
+ seqinfo(cur) = si.hs.38[cursn]
+ metadata(cur) = list(
+    date.created = date(),
+    creation = match.call(),
+    badpos = nogr,
+    sessInfo.creation = sessionInfo()
+    )
+ cur
+}
