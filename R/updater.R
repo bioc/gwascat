@@ -18,7 +18,13 @@
 #' @param withOnt logical indicating whether 'alternative' (ontology-present,
 #' includes repetition of loci with one:many ontological mapping) or 'full'
 #' (ontology-absent, one record per locus report) version of distributed table
-#' @return a GRanges instance
+#' @note `readr::read_tsv` records problems when some records have field contents
+#' that are inconsistent with the column specification.  This information can
+#' be retrieved from the metadata slot of the returned object, as noted
+#' in a message produced when this function is run.
+#' @return a slightly extended GRanges instance, with class name `gwaswloc`; the purpose
+#' of the introduction of this class is to support a concise show method that does not
+#' produce very long lines owing to large numbers of fields in the mcols component.
 #' @author VJ Carey
 #' @keywords models
 #' @examples
@@ -56,8 +62,21 @@ makeCurrentGwascat = function(table.url=
   `OR or BETA` = col_double()
 )
 
- tab = readr::read_tsv(tf, col_types=ct) #, sep="\t", header=TRUE, check.names=FALSE, stringsAsFactors=FALSE)
+ suppressMessages({
+  suppressWarnings({
+   tab <- readr::read_tsv(tf, col_types=ct) #, sep="\t", header=TRUE, check.names=FALSE, stringsAsFactors=FALSE)
+   })
+  })
+ pb = readr::problems(tab)
  message(paste0("formatting gwaswloc instance..."))
+ if (nrow(pb)>0) {
+    message("readr::read_tsv reports parsing problems, likely due to non-numeric tokens present in numeric fields.\nUse S4Vectors::metadata()$probs to see what was reported.")
+    nmc = names(tab)
+    probcol = nmc[pb$col]
+    pb$field = probcol
+    pb$study = tab$STUDY[pb$row]
+    pb$row = NULL # the data are reordered when presented to user
+ }
  tab = as.data.frame(tab)
  if (fixNonASCII) tab = fixNonASCII(tab)
  cur_plus = gwdf2GRanges(tab, extractDate=as.character(Sys.Date()))
@@ -72,7 +91,7 @@ makeCurrentGwascat = function(table.url=
     date.created = date(),
     creation = match.call(),
     badpos = nogr,
-    sessInfo.creation = sessionInfo()
+    sessInfo.creation = sessionInfo(), probs = pb  # new May 5 2022
     )
  message("done.")
  cur
