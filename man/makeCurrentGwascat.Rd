@@ -32,7 +32,9 @@ includes repetition of loci with one:many ontological mapping) or 'full'
 (ontology-absent, one record per locus report) version of distributed table}
 }
 \value{
-a GRanges instance
+a slightly extended GRanges instance, with class name `gwaswloc`; the purpose
+of the introduction of this class is to support a concise show method that does not
+produce very long lines owing to large numbers of fields in the mcols component.
 }
 \description{
 read NHGRI GWAS catalog table and construct associated GRanges instance
@@ -41,6 +43,12 @@ from the ranges instance
 an effort is made to use reasonable data types for GRanges metadata, so some
 qualifying characters such as (EA) in Risk allele frequency field will
 simply be omitted during coercion of contents of that field to numeric.
+}
+\note{
+`readr::read_tsv` records problems when some records have field contents
+that are inconsistent with the column specification.  This information can
+be retrieved from the metadata slot of the returned object, as noted
+in a message produced when this function is run.
 }
 \examples{
 
