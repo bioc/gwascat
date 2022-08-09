@@ -15,6 +15,18 @@ output:
 bibliography: gwascat.bib
 ---
 
+```{r setup,echo=FALSE,results="hide"}
+suppressMessages({
+suppressPackageStartupMessages({
+ library(gwascat)
+ library(dplyr)
+ library(GenomeInfoDb)
+ library(rtracklayer)
+ library(ggbio)
+})
+})
+```
+
 
 # Introduction
 
@@ -42,11 +54,45 @@ with \texttt{help.start()}.
 library(gwascat)
 ```
 
+## Using tidy methods -- added August 2022
+
+```{r dotidy}
+gwcat = get_cached_gwascat()
+library(dplyr)
+gwcat |> arrange(DATE)
+```
+
+We can produce a GRanges in two forms.  By default
+we get an mcols that has a small set of columns.  Note
+that records that lack a `CHR_POS` value are omitted.  
+Records that have complicated `CHR_POS` values, including
+semicolons or " x " notation are kept, but only the first
+position is retained.  The `CHR_ID` field may have
+complicated character values, these are not normalized,
+and are simply used as `seqnames` "as is".
+
+```{r getgr}
+gg = gwcat |> as_GRanges()
+gg
+```
+
+We can set the seqinfo as follows, retaining only
+records that employ
+standard chromosomes.
+```{r dosei}
+library(GenomeInfoDb)
+data(si.hs.38)
+gg = keepStandardChromosomes(gg, pruning="coarse")
+seqlevels(gg) = seqlevels(si.hs.38)
+seqinfo(gg) = si.hs.38
+gg
+```
+
 ## Getting a recent version of the GWAS catalog
 
 We use BiocFileCache to manage downloaded TSV from
 EBI's download site.  The file is provided without
-compression, so prepare for 100+MB download if you
+compression, so prepare for 200+MB download if you
 are not working from a cache.  There is no etag
 set, so you have to check for updates on your own.
 

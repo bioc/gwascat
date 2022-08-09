@@ -2,11 +2,12 @@
 % Please edit documentation in R/cache_current_gwascat.R
 \name{get_cached_gwascat}
 \alias{get_cached_gwascat}
-\title{use BiocFileCache to retrieve and keep an image of the tsv file}
+\title{use BiocFileCache to retrieve and keep an image of the tsv file distributed by EBI}
 \usage{
 get_cached_gwascat(
   url = "http://www.ebi.ac.uk/gwas/api/search/downloads/alternative",
   cache = BiocFileCache::BiocFileCache(),
+  refresh = FALSE,
   ...
 )
 }
@@ -15,10 +16,16 @@ get_cached_gwascat(
 
 \item{cache}{BiocFileCache::BiocFileCache instance}
 
+\item{refresh}{logical(1) force download and recaching}
+
 \item{\dots}{passed to bfcadd}
 }
+\value{
+a tibble as produced by readr::read_tsv, with attributes extractDate (as
+recorded in cache as `access_time`, and problems (a tibble returned by read_tsv).
+}
 \description{
-use BiocFileCache to retrieve and keep an image of the tsv file
+use BiocFileCache to retrieve and keep an image of the tsv file distributed by EBI
 }
 \note{
 will If query of cache with 'ebi.ac.uk/gwas' returns 0-row tibble,

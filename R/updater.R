@@ -5,9 +5,9 @@
 #' an effort is made to use reasonable data types for GRanges metadata, so some
 #' qualifying characters such as (EA) in Risk allele frequency field will
 #' simply be omitted during coercion of contents of that field to numeric.
-#' @importFrom GenomeInfoDb genome genome<- seqnames seqlevelsStyle seqlevelsStyle<- seqlevels seqlevels<- seqinfo seqinfo<-
+#' @importFrom GenomeInfoDb genome genome<- seqnames seqlevelsStyle seqlevelsStyle<- seqlevels seqlevels<- seqinfo seqinfo<- seqlengths seqlengths<-
 #' @import readr
-#' 
+#' @importFrom utils data download.file read.delim sessionInfo
 #' @param table.url string identifying the .txt file curated at EBI/EMBL
 #' @param fixNonASCII logical, if TRUE, non-ASCII characters as identified by
 #' iconv will be replaced by asterisk
