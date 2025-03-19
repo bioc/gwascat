@@ -21,14 +21,14 @@ get_cached_gwascat(
 \item{\dots}{passed to bfcadd}
 }
 \value{
-a tibble as produced by readr::read_tsv, with attributes extractDate (as
-recorded in cache as `access_time`, and problems (a tibble returned by read_tsv).
+a tibble from data.frame as produced by data.table::fread, with attributes extractDate (as
+recorded in cache as `access_time`
 }
 \description{
 use BiocFileCache to retrieve and keep an image of the tsv file distributed by EBI
 }
 \note{
-will If query of cache with 'ebi.ac.uk/gwas' returns 0-row tibble,
-will populate cache with bfcadd.  Uses readr::read_tsv on cache content to return tibble.
+If query of cache with 'ebi.ac.uk/gwas' returns 0-row tibble,
+will populate cache with bfcadd.  Uses data.table::fread on cache content to return tibble.
 The etag field does not seem to be used at EBI, thus user must check for updates.
 }

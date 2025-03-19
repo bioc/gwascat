@@ -6,7 +6,8 @@
 #' qualifying characters such as (EA) in Risk allele frequency field will
 #' simply be omitted during coercion of contents of that field to numeric.
 #' @importFrom GenomeInfoDb genome genome<- seqnames seqlevelsStyle seqlevelsStyle<- seqlevels seqlevels<- seqinfo seqinfo<- seqlengths seqlengths<-
-#' @import readr
+#' @import tibble 
+#' @importFrom data.table fread
 #' @importFrom utils data download.file read.delim sessionInfo
 #' @param table.url string identifying the .txt file curated at EBI/EMBL
 #' @param fixNonASCII logical, if TRUE, non-ASCII characters as identified by
@@ -18,10 +19,6 @@
 #' @param withOnt logical indicating whether 'alternative' (ontology-present,
 #' includes repetition of loci with one:many ontological mapping) or 'full'
 #' (ontology-absent, one record per locus report) version of distributed table
-#' @note `readr::read_tsv` records problems when some records have field contents
-#' that are inconsistent with the column specification.  This information can
-#' be retrieved from the metadata slot of the returned object, as noted
-#' in a message produced when this function is run.
 #' @return a slightly extended GRanges instance, with class name `gwaswloc`; the purpose
 #' of the introduction of this class is to support a concise show method that does not
 #' produce very long lines owing to large numbers of fields in the mcols component.
@@ -45,39 +42,40 @@ makeCurrentGwascat = function(table.url=
  tst = try(download.file(table.url, destfile=tf))
  if (inherits(tst, "try-error")) stop("could not complete download")
 
- ct = readr::cols(
-  .default = col_character(),
-  `DATE ADDED TO CATALOG` = col_date(format = ""),
-  PUBMEDID = col_double(),
-  DATE = col_date(format = ""),
-  CHR_ID = col_character(),
-  CHR_POS = col_double(),
-  UPSTREAM_GENE_DISTANCE = col_double(),
-  DOWNSTREAM_GENE_DISTANCE = col_double(),
-  MERGED = col_double(),
-  SNP_ID_CURRENT = col_double(),
-  INTERGENIC = col_double(),
-  `P-VALUE` = col_double(),
-  PVALUE_MLOG = col_double(),
-  `OR or BETA` = col_double()
-)
+# ct = readr::cols(
+#  .default = col_character(),
+#  `DATE ADDED TO CATALOG` = col_date(format = ""),
+#  PUBMEDID = col_double(),
+#  DATE = col_date(format = ""),
+#  CHR_ID = col_character(),
+#  CHR_POS = col_double(),
+#  UPSTREAM_GENE_DISTANCE = col_double(),
+#  DOWNSTREAM_GENE_DISTANCE = col_double(),
+#  MERGED = col_double(),
+#  SNP_ID_CURRENT = col_double(),
+#  INTERGENIC = col_double(),
+#  `P-VALUE` = col_double(),
+#  PVALUE_MLOG = col_double(),
+#  `OR or BETA` = col_double()
+#)
 
  suppressMessages({
   suppressWarnings({
-   tab <- readr::read_tsv(tf, col_types=ct) #, sep="\t", header=TRUE, check.names=FALSE, stringsAsFactors=FALSE)
+   #tab <- readr::read_tsv(tf, col_types=ct) #, sep="\t", header=TRUE, check.names=FALSE, stringsAsFactors=FALSE)
+   tab <- data.table::fread(tf) |> as.data.frame() |> tibble::tibble() #::read_tsv(tf, col_types=ct) #, sep="\t", header=TRUE, check.names=FALSE, stringsAsFactors=FALSE)
    })
   })
- pb = readr::problems(tab)
- message(paste0("formatting gwaswloc instance..."))
- if (nrow(pb)>0) {
-    message("readr::read_tsv reports parsing problems, likely due to non-numeric tokens present in numeric fields.\nUse S4Vectors::metadata()$probs to see what was reported.")
-    nmc = names(tab)
-    probcol = nmc[pb$col]
-    pb$field = probcol
-    pb$study = tab$STUDY[pb$row]
-    pb$row = NULL # the data are reordered when presented to user
- }
- tab = as.data.frame(tab)
+# pb = readr::problems(tab)
+# message(paste0("formatting gwaswloc instance..."))
+# if (nrow(pb)>0) {
+#    message("readr::read_tsv reports parsing problems, likely due to non-numeric tokens present in numeric fields.\nUse S4Vectors::metadata()$probs to see what was reported.")
+#    nmc = names(tab)
+#    probcol = nmc[pb$col]
+#    pb$field = probcol
+#    pb$study = tab$STUDY[pb$row]
+#    pb$row = NULL # the data are reordered when presented to user
+# }
+# tab = as.data.frame(tab)
  if (fixNonASCII) tab = fixNonASCII(tab)
  cur_plus = gwdf2GRanges(tab, extractDate=as.character(Sys.Date()))
  cur = cur_plus$okrngs
@@ -91,7 +89,7 @@ makeCurrentGwascat = function(table.url=
     date.created = date(),
     creation = match.call(),
     badpos = nogr,
-    sessInfo.creation = sessionInfo(), probs = pb  # new May 5 2022
+    sessInfo.creation = sessionInfo() #, probs = pb  # new May 5 2022 # drop with fread usage 3/19/2025
     )
  message("done.")
  cur

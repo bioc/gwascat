@@ -6,6 +6,7 @@
 \usage{
 as_GRanges(
   x,
+  fixup = TRUE,
   short = TRUE,
   for_short = c("PUBMEDID", "DATE", "DISEASE/TRAIT", "SNPS"),
   genome_tag = "GRCh38"
@@ -13,6 +14,10 @@ as_GRanges(
 }
 \arguments{
 \item{x}{a tibble from `get_cached_gwascat()`}
+
+\item{fixup}{logical(1) defaults to TRUE: to deal with missing `CHR_ID` and
+other unexpected records seen in March 2025, apply fixsnps function before
+transforming; failure to do this may lead to errors in GRanges production}
 
 \item{short}{logical(1) if TRUE only keep selected columns in mcols}
 

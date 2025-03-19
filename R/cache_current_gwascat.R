@@ -1,16 +1,15 @@
 
 #' use BiocFileCache to retrieve and keep an image of the tsv file distributed by EBI
 #' @import BiocFileCache
-#' @importFrom readr read_tsv problems
 #' @param url character(1) url to use
 #' @param cache BiocFileCache::BiocFileCache instance
 #' @param refresh logical(1) force download and recaching
 #' @param \dots passed to bfcadd
-#' @note will If query of cache with 'ebi.ac.uk/gwas' returns 0-row tibble,
-#' will populate cache with bfcadd.  Uses readr::read_tsv on cache content to return tibble.
+#' @note If query of cache with 'ebi.ac.uk/gwas' returns 0-row tibble,
+#' will populate cache with bfcadd.  Uses data.table::fread on cache content to return tibble.
 #' The etag field does not seem to be used at EBI, thus user must check for updates.
-#' @return a tibble as produced by readr::read_tsv, with attributes extractDate (as
-#' recorded in cache as `access_time`, and problems (a tibble returned by read_tsv).
+#' @return a tibble from data.frame as produced by data.table::fread, with attributes extractDate (as
+#' recorded in cache as `access_time`
 #' @export
 get_cached_gwascat = function(url="http://www.ebi.ac.uk/gwas/api/search/downloads/alternative",
                         cache=BiocFileCache::BiocFileCache(), refresh=FALSE, ...) {
@@ -20,23 +19,25 @@ get_cached_gwascat = function(url="http://www.ebi.ac.uk/gwas/api/search/download
       chk = BiocFileCache::bfcquery(cache, "ebi.ac.uk/gwas")
       }
   ans = suppressMessages({ suppressWarnings({
-      readr::read_tsv(BiocFileCache::bfcrpath(cache)[[rev(chk$rid)[1]]]) # use rev to get latest addition
+      data.table::fread(BiocFileCache::bfcrpath(cache)[[rev(chk$rid)[1]]]) |> as.data.frame() |> tibble() # use rev to get latest addition
       }) })
-  pb = readr::problems(ans)
   attr(ans, "extractDate") = chk$access_time
-  attr(ans, "problems") = pb
   ans
 }
   
 #' produce a GRanges from gwascat tibble
 #' @param x a tibble from `get_cached_gwascat()`
+#' @param fixup logical(1) defaults to TRUE: to deal with missing `CHR_ID` and
+#' other unexpected records seen in March 2025, apply fixsnps function before
+#' transforming; failure to do this may lead to errors in GRanges production
 #' @param short logical(1) if TRUE only keep selected columns in mcols
 #' @param for_short character() column names to keep in mcols
 #' @param genome_tag character(1) defaults to "GRCh38"
 #' @export
-as_GRanges = function(x, short=TRUE, for_short=c("PUBMEDID", "DATE", "DISEASE/TRAIT",
+as_GRanges = function(x, fixup=TRUE, short=TRUE, for_short=c("PUBMEDID", "DATE", "DISEASE/TRAIT",
    "SNPS"), genome_tag = "GRCh38") {
   if (!requireNamespace("GenomeInfoDb")) stop("install GenomeInfoDb to use this package")
+  if (fixup) x = fixsnps(x) # could obviate need for checks below, note attr(x, "noncanon") is available
   bad = which(is.na(x$CHR_POS))
   lbad = length(bad)
   if (lbad>0) {
@@ -49,9 +50,6 @@ as_GRanges = function(x, short=TRUE, for_short=c("PUBMEDID", "DATE", "DISEASE/TR
     message(sprintf("%d records have semicolon in CHR_POS; splitting and using first entry.\n", lsemi))
     npos = strsplit(x$CHR_POS, ";")
     x$CHR_POS = vapply(npos, function(z) z[1], character(1))
-#    print(summary(as.numeric(x$CHR_POS)))
-#    bad = which(is.na(as.numeric(x$CHR_POS)))[1:4]
-#    print(as.data.frame(x[bad,]))
     }
   has_x = grep(" x ", x$CHR_POS)
   lhasx = length(has_x)
@@ -64,6 +62,7 @@ as_GRanges = function(x, short=TRUE, for_short=c("PUBMEDID", "DATE", "DISEASE/TR
   if (short) mcols(ans) = x[,for_short]
   else mcols(ans) = x
   GenomeInfoDb::genome(ans) = genome_tag
+  if (fixup) metadata(ans)$noncanon = attr(x, "noncanon")
   ans
 }
 #

@@ -44,12 +44,6 @@ an effort is made to use reasonable data types for GRanges metadata, so some
 qualifying characters such as (EA) in Risk allele frequency field will
 simply be omitted during coercion of contents of that field to numeric.
 }
-\note{
-`readr::read_tsv` records problems when some records have field contents
-that are inconsistent with the column specification.  This information can
-be retrieved from the metadata slot of the returned object, as noted
-in a message produced when this function is run.
-}
 \examples{
 
 # if you have good internet access
