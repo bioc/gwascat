@@ -20,12 +20,14 @@
 #' @author VJ Carey
 #' @keywords models
 #' @examples
+#' \donttest{
 #'  cand = GenomicRanges::GRanges("1", IRanges::IRanges(113038694, width=1))
 #'  names(cand) = "rs883593"
 #'  requireNamespace("VariantAnnotation")
 #'  expath = dir(system.file("vcf", package="gwascat"), patt=".*exon.*gz$", full=TRUE)
 #'  tf = Rsamtools::TabixFile(expath)
 #'  ldtagr( cand, tf, lbR2 = .8)
+#' }
 #' @export ldtagr
 ldtagr = function( snprng, tf, samples, genome="hg19",
    lbmaf=.05, lbR2=.8, radius=100000 ) {

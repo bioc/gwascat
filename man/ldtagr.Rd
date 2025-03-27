@@ -45,12 +45,14 @@ slow but safe approach.  probably a matrix method could be substituted
 using the nice sparse approach already in snpStats
 }
 \examples{
+\donttest{
  cand = GenomicRanges::GRanges("1", IRanges::IRanges(113038694, width=1))
  names(cand) = "rs883593"
  requireNamespace("VariantAnnotation")
  expath = dir(system.file("vcf", package="gwascat"), patt=".*exon.*gz$", full=TRUE)
  tf = Rsamtools::TabixFile(expath)
  ldtagr( cand, tf, lbR2 = .8)
+}
 }
 \author{
 VJ Carey
