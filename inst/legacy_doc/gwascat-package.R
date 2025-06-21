@@ -28,7 +28,7 @@
 #' related to rule-based imputation, using the
 #' \code{\link[snpStats]{impute.snps}} function.
 #' 
-#' si.hs.38 is a \code{\link[GenomeInfoDb]{Seqinfo-class}} instance for hg38.
+#' si.hs.38 is a \code{\link[Seqinfo]{Seqinfo-class}} instance for hg38.
 #' 
 #' @name gwascat-package
 #' @aliases gwascat-package gwascat g17SM gg17N gw6.rs_17 low17
@@ -129,8 +129,8 @@ NULL
 #' @importFrom rtracklayer import
 #' @importFrom methods as callNextMethod is
 #' @importFrom utils data read.delim
-#' @importFrom GenomeInfoDb seqlevels seqlengths "seqlengths<-" "seqlevels<-" "seqlevelsStyle<-" "seqinfo" "seqinfo<-"
-#' @importFrom GenomeInfoDb seqnames
+#' @importFrom Seqinfo seqlevels seqlengths "seqlengths<-" "seqlevels<-" "seqinfo" "seqinfo<-" seqnames
+#' @importFrom GenomeInfoDb "seqlevelsStyle<-"
 #' @aliases gwaswloc-class [,gwaswloc,ANY,ANY,ANY-method [,gwaswloc,ANY-method
 #' [,gwaswloc-method show,gwaswloc-method getRsids,gwaswloc-method
 #' getTraits,gwaswloc-method subsetByChromosome,gwaswloc-method

@@ -41,12 +41,12 @@
 
 #' Seqinfo for GRCh37
 #' @docType data
-#' @format GenomeInfoDb Seqinfo instance
+#' @format Seqinfo instance
 "si.hs.37" 
 
 #' Seqinfo for GRCh38
 #' @docType data
-#' @format GenomeInfoDb Seqinfo instance
+#' @format Seqinfo instance
 "si.hs.38" 
 
 #' image of locon6 in GRanges, lifted over to hg38

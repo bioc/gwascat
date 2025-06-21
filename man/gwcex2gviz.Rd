@@ -40,7 +40,7 @@ Prepare salient components of GWAS catalog for rendering with Gviz
 
  data(ebicat_2020_04_30)
  # GenomeInfoDb::seqlevelsStyle(ebicat_2020_04_30) = "UCSC" # no more
- GenomeInfoDb::seqlevels(ebicat_2020_04_30) = paste0("chr", GenomeInfoDb::seqlevels(ebicat_2020_04_30))
+ Seqinfo::seqlevels(ebicat_2020_04_30) = paste0("chr", Seqinfo::seqlevels(ebicat_2020_04_30))
  gwcex2gviz(ebicat_2020_04_30)
 
 }

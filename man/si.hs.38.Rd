@@ -5,7 +5,7 @@
 \alias{si.hs.38}
 \title{Seqinfo for GRCh38}
 \format{
-GenomeInfoDb Seqinfo instance
+Seqinfo instance
 }
 \usage{
 si.hs.38

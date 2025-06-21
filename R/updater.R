@@ -5,7 +5,8 @@
 #' an effort is made to use reasonable data types for GRanges metadata, so some
 #' qualifying characters such as (EA) in Risk allele frequency field will
 #' simply be omitted during coercion of contents of that field to numeric.
-#' @importFrom GenomeInfoDb genome genome<- seqnames seqlevelsStyle seqlevelsStyle<- seqlevels seqlevels<- seqinfo seqinfo<- seqlengths seqlengths<-
+#' @importFrom Seqinfo genome genome<- seqnames seqlevels seqlevels<- seqinfo seqinfo<- seqlengths seqlengths<-
+#' @importFrom GenomeInfoDb seqlevelsStyle seqlevelsStyle<-
 #' @import tibble 
 #' @importFrom data.table fread
 #' @importFrom utils data download.file read.delim sessionInfo

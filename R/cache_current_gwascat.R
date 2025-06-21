@@ -61,7 +61,7 @@ as_GRanges = function(x, fixup=TRUE, short=TRUE, for_short=c("PUBMEDID", "DATE",
   ans = GenomicRanges::GRanges(x$CHR_ID, IRanges(as.numeric(x$CHR_POS), width=1))
   if (short) mcols(ans) = x[,for_short]
   else mcols(ans) = x
-  GenomeInfoDb::genome(ans) = genome_tag
+  Seqinfo::genome(ans) = genome_tag
   if (fixup) metadata(ans)$noncanon = attr(x, "noncanon")
   ans
 }
