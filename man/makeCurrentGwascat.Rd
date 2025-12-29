@@ -10,8 +10,9 @@ qualifying characters such as (EA) in Risk allele frequency field will
 simply be omitted during coercion of contents of that field to numeric.}
 \usage{
 makeCurrentGwascat(
-  table.url = "http://www.ebi.ac.uk/gwas/api/search/downloads/alternative",
-  fixNonASCII = TRUE,
+  table.url =
+    "https://www.ebi.ac.uk/gwas/api/search/downloads/associations/v1.0?split=false",
+  fixNonASCII = FALSE,
   genome = "GRCh38",
   withOnt = TRUE
 )
@@ -20,7 +21,7 @@ makeCurrentGwascat(
 \item{table.url}{string identifying the .txt file curated at EBI/EMBL}
 
 \item{fixNonASCII}{logical, if TRUE, non-ASCII characters as identified by
-iconv will be replaced by asterisk}
+iconv will be replaced by asterisk; default is FALSE starting Dec 29 2025.}
 
 \item{genome}{character string: 'GRCh38' is default and yields current image
 as provided by EMBL/EBI; 'GRCh37' yields a realtime liftOver to hg19

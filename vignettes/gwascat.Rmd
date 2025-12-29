@@ -48,7 +48,7 @@ obtain interactive access to all the facilities.  After executing
 this command, use \verb+help(package="gwascat")+ to obtain an overview.
 The current version of this vignette can always be accessed at
 www.bioconductor.org, or by suitably navigating the web pages generated
-with \texttt{help.start()}.
+with `help.start()`.
 
 ```{r getlib,echo=FALSE,results='hide'}
 library(gwascat)
@@ -238,7 +238,7 @@ We can determine which traits are associated with loci interrogated
 by the chip as follows.  We work with a subset of the 1 million loci
 for illustration.
 
-The \texttt{locon6} data frame has information on 10000 probes,
+The `locon6` data frame has information on 10000 probes,
 acquired through the following code (not executed here to reduce
 dependence on the pd.genomewidesnp.6 package, which is very large.
 ```{r dobig,eval=FALSE}
@@ -313,7 +313,7 @@ tail(nn)
 
 # Counting alleles associated with traits
 
-We can use \texttt{riskyAlleleCount} to count
+We can use `riskyAlleleCount` to count
 risky alleles enumerated in the GWAS catalog.  This
 particular function assumes that we have genotyped at
 the catalogued loci.  Below we will discuss how to impute
@@ -325,7 +325,7 @@ gg17N[1:5,1:5]
 This function can use genotype information in the A/B format,
 assuming that B denotes the alphabetically later nucleotide.
 Because we have direct nucleotide coding in our matrix, we set
-the \texttt{matIsAB} parameter to false in this call.
+the `matIsAB` parameter to false in this call.
 
 ```{r dorun}
 h17 = riskyAlleleCount(gg17N, matIsAB=FALSE, chr="ch17",
@@ -417,7 +417,7 @@ More work on formalization of trait terms is underway.
 
 % NB the graph stuff can be used for other OBO without .db packages..
 %The \textit{gwascat} package includes an OBO-formatted
-%image of the ontology and a model for it as a \texttt{graphNEL} instance
+%image of the ontology and a model for it as a `graphNEL` instance
 %as defined in the Bioconductor \textit{graph} package \cite{carey2005}.
 
 %The graph model is constructed as follows.
@@ -489,7 +489,7 @@ GRanges with 20 ranges and 4 metadata columns:
 A basic question concerning the use of archived
 SNP identifiers is durability
 of the association between asserted location
-and SNP identifier.  The \texttt{chklocs}
+and SNP identifier.  The `chklocs`
 function uses a current Bioconductor
 SNPlocs package to check this.
 

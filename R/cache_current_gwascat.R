@@ -11,7 +11,7 @@
 #' @return a tibble from data.frame as produced by data.table::fread, with attributes extractDate (as
 #' recorded in cache as `access_time`
 #' @export
-get_cached_gwascat = function(url="http://www.ebi.ac.uk/gwas/api/search/downloads/alternative",
+get_cached_gwascat = function(url="https://www.ebi.ac.uk/gwas/api/search/downloads/associations/v1.0?split=false",
                         cache=BiocFileCache::BiocFileCache(), refresh=FALSE, ...) {
   chk = BiocFileCache::bfcquery(cache, "ebi.ac.uk/gwas")
   if (nrow(chk)==0 | refresh) {

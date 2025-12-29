@@ -12,7 +12,7 @@
 #' @importFrom utils data download.file read.delim sessionInfo
 #' @param table.url string identifying the .txt file curated at EBI/EMBL
 #' @param fixNonASCII logical, if TRUE, non-ASCII characters as identified by
-#' iconv will be replaced by asterisk
+#' iconv will be replaced by asterisk; default is FALSE starting Dec 29 2025.
 #' @param genome character string: 'GRCh38' is default and yields current image
 #' as provided by EMBL/EBI; 'GRCh37' yields a realtime liftOver to hg19
 #' coordinates, via AnnotationHub storage of the chain files. Any other value
@@ -35,8 +35,8 @@
 #' 
 #' @export makeCurrentGwascat
 makeCurrentGwascat = function(table.url=
-  "http://www.ebi.ac.uk/gwas/api/search/downloads/alternative",
-   fixNonASCII=TRUE, genome="GRCh38", withOnt=TRUE) {
+  "https://www.ebi.ac.uk/gwas/api/search/downloads/associations/v1.0?split=false",
+   fixNonASCII=FALSE, genome="GRCh38", withOnt=TRUE) {
  stopifnot(genome %in% c("GRCh37", "GRCh38"))
  tf = tempfile()
  if (!withOnt) table.url = sub("alternative", "full", table.url)
