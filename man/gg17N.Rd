@@ -8,7 +8,7 @@
 matrix
 }
 \usage{
-gg17N
+data(gg17N)
 }
 \description{
 genotype matrix from chr17 1000 genomes

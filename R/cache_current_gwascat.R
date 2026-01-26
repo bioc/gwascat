@@ -11,12 +11,12 @@
 #' @return a tibble from data.frame as produced by data.table::fread, with attributes extractDate (as
 #' recorded in cache as `access_time`
 #' @export
-get_cached_gwascat = function(url="https://www.ebi.ac.uk/gwas/api/search/downloads/associations/v1.0?split=false",
+get_cached_gwascat = function(url="https://www.ebi.ac.uk/gwas/api/search/downloads/associations/v1.0.2?split=false",
                         cache=BiocFileCache::BiocFileCache(), refresh=FALSE, ...) {
-  chk = BiocFileCache::bfcquery(cache, "ebi.ac.uk/gwas")
+  chk = BiocFileCache::bfcquery(cache, "ebi.ac.uk/gwas/api/search/downloads/associations/v1.0.2")
   if (nrow(chk)==0 | refresh) {
       nca = BiocFileCache::bfcadd(cache, url, ...)
-      chk = BiocFileCache::bfcquery(cache, "ebi.ac.uk/gwas")
+      chk = BiocFileCache::bfcquery(cache, "ebi.ac.uk/gwas/api/search/downloads/associations/v1.0.2")
       }
   ans = suppressMessages({ suppressWarnings({
       data.table::fread(BiocFileCache::bfcrpath(cache)[[rev(chk$rid)[1]]]) |> as.data.frame() |> tibble() # use rev to get latest addition

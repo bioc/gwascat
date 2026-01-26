@@ -8,7 +8,7 @@
 Seqinfo instance
 }
 \usage{
-si.hs.37
+data(si.hs.37)
 }
 \description{
 Seqinfo for GRCh37

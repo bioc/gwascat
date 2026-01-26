@@ -8,7 +8,7 @@
 data.frame, coordinates are hg19
 }
 \usage{
-locon6
+data(locon6)
 }
 \description{
 location data for 10000 SNP

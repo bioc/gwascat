@@ -8,7 +8,7 @@
 GRanges
 }
 \usage{
-gwastagger
+data(gwastagger)
 }
 \description{
 GRanges with LD information on 9998 SNP

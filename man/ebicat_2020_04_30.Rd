@@ -8,7 +8,7 @@
 gwaswloc instance
 }
 \usage{
-ebicat_2020_04_30
+data(ebicat_2020_04_30)
 }
 \description{
 serialized gwaswloc instance from april 30 2020, sample of 50000 records

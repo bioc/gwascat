@@ -35,7 +35,7 @@
 #' 
 #' @export makeCurrentGwascat
 makeCurrentGwascat = function(table.url=
-  "https://www.ebi.ac.uk/gwas/api/search/downloads/associations/v1.0?split=false",
+  "https://www.ebi.ac.uk/gwas/api/search/downloads/associations/v1.0.2?split=false",
    fixNonASCII=FALSE, genome="GRCh38", withOnt=TRUE) {
  stopifnot(genome %in% c("GRCh37", "GRCh38"))
  tf = tempfile()

@@ -8,7 +8,7 @@
 GRanges instance
 }
 \usage{
-gr6.0_hg38
+data(gr6.0_hg38)
 }
 \description{
 image of locon6 in GRanges, lifted over to hg38

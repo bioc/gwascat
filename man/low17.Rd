@@ -8,7 +8,7 @@
 snpStats SnpMatrix instance
 }
 \usage{
-low17
+data(low17)
 }
 \description{
 SnpMatrix instance from chr17

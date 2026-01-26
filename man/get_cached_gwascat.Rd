@@ -5,7 +5,7 @@
 \title{use BiocFileCache to retrieve and keep an image of the tsv file distributed by EBI}
 \usage{
 get_cached_gwascat(
-  url = "https://www.ebi.ac.uk/gwas/api/search/downloads/associations/v1.0?split=false",
+  url = "https://www.ebi.ac.uk/gwas/api/search/downloads/associations/v1.0.2?split=false",
   cache = BiocFileCache::BiocFileCache(),
   refresh = FALSE,
   ...

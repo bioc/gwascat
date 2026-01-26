@@ -8,7 +8,7 @@
 character vector
 }
 \usage{
-gw6.rs_17
+data(gw6.rs_17)
 }
 \description{
 character vector of rs numbers for SNP on chr17
