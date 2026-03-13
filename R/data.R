@@ -7,11 +7,6 @@
 #' @format gwaswloc instance
 "ebicat_2020_04_30"
 
-#' SnpMatrix instance from chr17
-#' @docType data
-#' @usage data(g17SM)
-#' @format snpStats SnpMatrix instance
-"g17SM"
 
 #' genotype matrix from chr17 1000 genomes
 #' @docType data
@@ -40,11 +35,6 @@
 #' @format data.frame, coordinates are hg19
 "locon6"
 
-#' SnpMatrix instance from chr17
-#' @docType data
-#' @usage data(low17)
-#' @format snpStats SnpMatrix instance
-"low17"
 
 #' Seqinfo for GRCh37
 #' @docType data

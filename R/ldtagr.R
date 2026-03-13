@@ -1,7 +1,6 @@
 #' 
 #' expand a list of variants by including those in a VCF with LD exceeding some
 #' threshold; uses snpStats ld()
-#' @import snpStats
 #' @import VariantAnnotation
 #' @import S4Vectors
 #' @param snprng a named GRanges for a single SNP.  The name must correspond to
@@ -38,12 +37,15 @@ ldtagr = function( snprng, tf, samples, genome="hg19",
 # 
   stopifnot(length(snprng)==1)
   snpid = names(snprng)
+  empty = GRanges()
   stopifnot(length(snpid)==1)
   if (!requireNamespace("DelayedArray")) stop("install DelayedArray to use this function")
-  if (!requireNamespace("snpStats")) stop("install snpStats to use this function")
+  if (!requireNamespace("snpStats")) {
+      message("install snpStats to use this function, returning empty GRanges.")
+      return(empty)
+      }
   quer = queryVCF( gr=snprng+radius, vcf.tf=tf, 
          samps=samples, genome=genome, getSM=TRUE )
-  empty = GRanges()
   mcols(empty) = S4Vectors::DataFrame(paramRangeID = factor(), R2 = numeric())
   vcfrng = DelayedArray::rowRanges(quer$readout)
   gt = quer$sm$genotypes
